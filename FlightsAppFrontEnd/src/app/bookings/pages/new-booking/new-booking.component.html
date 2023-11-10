@@ -1,0 +1,81 @@
+<div class="container-fluid animate__animated animate__fadeIn">
+  <h1 *ngIf="currentBooking.id === 0">Make a Booking</h1>
+  <h1 *ngIf="currentBooking.id !== 0">Edit Booking</h1>
+
+  <mat-divider class="mb-2"></mat-divider>
+
+  <div class="grid">
+    <div class="col-6">
+      <mat-card>
+        <mat-card-content>
+          <form class="grid" [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+            <mat-form-field *ngIf="" class="col-12">
+              <mat-label>Booking</mat-label>
+              <input matInput type="text" required />
+            </mat-form-field>
+
+            <mat-form-field class="col-12">
+              <mat-label>Flights </mat-label>
+              <mat-select [(value)]="selectedFlight">
+                <!-- formControlName="flights" -->
+                <mat-option
+                  *ngFor="let flight of flightsInfo"
+                  [value]="flight.id"
+                >
+                  {{ flight.origin }} To {{ flight.destination }}
+                </mat-option>
+              </mat-select>
+              <!-- Agregar vuelo a la reserva  -->
+            </mat-form-field>
+
+            <mat-form-field class="col-12">
+              <mat-label>Passengers Number</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="passengers_number"
+                required
+              />
+            </mat-form-field>
+          </form>
+
+          <div class="row"></div>
+
+          <mat-card-actions align="end">
+            <button *ngIf="tempFlights.length>0" class="me-2" mat-raised-button color="warn" (click)="resetFlightList()">
+              <mat-icon>restart_alt</mat-icon>
+              Reset Flight List
+            </button>
+            <button class="me-2" mat-raised-button color="secondary" (click)="addFlight()">
+              <mat-icon>add</mat-icon>
+              Add Flight
+            </button>
+
+            <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="bookingForm.invalid || selectedFlight ===undefined ">
+              <mat-icon>save</mat-icon>
+              Save
+            </button>
+          </mat-card-actions>
+        </mat-card-content>
+      </mat-card>
+
+      <div class="row mt-2">
+
+        <app-flight-detail [flight]="selectedFlight"></app-flight-detail>
+      </div>
+
+
+    </div>
+    <div class="col-6">
+      <h2>Flights Booked</h2>
+
+      <div class="grid">
+        <div *ngFor="let flight of tempFlights" class="col-6 text-right">
+          <span class="btn btn-danger" (click)="deleteFlight(flight)">X</span>
+          <app-flight-detail [flight]="flight.id"></app-flight-detail>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

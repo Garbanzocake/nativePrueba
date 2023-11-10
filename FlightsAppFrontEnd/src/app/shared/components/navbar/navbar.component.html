@@ -1,0 +1,23 @@
+<nav class="d-none d-sm-block navbar navbar-light backgroundColor p-0">
+  <div  class="container-fluid justify-content-between p-2">
+    <a class="navbar-brand" style="color: #FFD700;"> Booking Flights App</a>
+
+      <span  style="color: #FFD700;">Hello {{user()?.firstName}} {{user()?.lastName}}!</span>
+
+
+
+
+
+      <button *ngIf="!user()" class="btn btn-outline-warning" (click)="onLogin()">
+        Log In
+        <i class="fa fa-sign-in" aria-hidden="true"></i>
+      </button>
+
+    <button *ngIf="user()" class="btn btn-danger" (click)="onLogOut()">
+      Sign Out
+      <i class="fa fa-sign-out" aria-hidden="true"></i>
+    </button>
+  </div>
+
+
+</nav>

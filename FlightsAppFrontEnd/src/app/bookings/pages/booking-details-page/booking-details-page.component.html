@@ -1,0 +1,25 @@
+<div class="mt-2 animate__animated animate__fadeIn" *ngIf="booking" >
+  <h1>Hi! {{booking.user.firstName}} {{booking.user.lastName}}, Here's your Booking # {{ booking.id }}!</h1>
+
+  <mat-divider></mat-divider>
+
+  <div class="grid mt-2">
+    <div class="col-3">
+        <p>Number of Passengers:{{booking.passengers_number}}</p>
+        <p>Booking Date:{{booking.booking_date| date}}</p>
+    </div>
+    <div class="col-9">
+      <h2>Your Flights! </h2>
+      <div class="grid">
+        <div class="col-4" *ngFor="let flight of flights">
+          <app-flight-detail [flight]="flight.id"></app-flight-detail>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+</div>

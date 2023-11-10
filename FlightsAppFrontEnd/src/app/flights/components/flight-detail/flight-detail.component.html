@@ -1,0 +1,24 @@
+<div class="grid animate__animated animate__fadeIn">
+  <div class="col-12">
+    <mat-card *ngIf="flightInfo !== undefined">
+      <mat-card-header>
+        <mat-card-title>
+          Flight Detail
+        </mat-card-title>
+         </mat-card-header>
+      <mat-card-content>
+        <mat-list-item><strong>Airline:</strong> {{ flightInfo.airline }}</mat-list-item>
+        <mat-list-item><strong>Flight Number:</strong> {{ flightInfo.flight_number }}</mat-list-item>
+        <mat-list-item><strong>Origin:</strong> {{ flightInfo.origin }}</mat-list-item>
+        <mat-list-item><strong>Destination:</strong> {{ flightInfo.destination }}</mat-list-item>
+        <mat-list-item><strong>Departure Date:</strong> {{ flightInfo.departure_date | date }}</mat-list-item>
+        <mat-list-item><strong>Arrival Date:</strong> {{ flightInfo.arrival_date | date }}</mat-list-item>
+        <mat-list-item><strong>Available Seats:</strong> {{ flightInfo.available_seats }}</mat-list-item>
+
+
+
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
