@@ -4,6 +4,7 @@ Correr el comando ``npm install`` para los modulos de node.
 
 >La base de datos es Posgresql v16 ,para conectarla se debe crear el archivo .env en el nivel del gitignore con los valores respectivos ,los usados estaran en blanco en el .env.template para reemplazar.
 >Jwt_Seed es un secret para la creacion de token.
+>Crear una bd llamada bookings en pgAdmin,despues de creada click derecho en la bd ,dar restore y seleccionar el archivo bookings.sql, el usuario test1 es `test1@test.com, password:123456` y luego poner el nombre en la conexion.
 
 ## Running the app
 
