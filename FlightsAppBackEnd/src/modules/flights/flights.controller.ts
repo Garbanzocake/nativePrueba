@@ -18,6 +18,11 @@ export class FlightsController {
     return this.flightsService.findAll();
   }
 
+  @Get('/farDate')
+  findAllOrderedByDate() {
+    return this.flightsService.findAllOrderedByFarestDate();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.flightsService.findFlightById(Number(id));

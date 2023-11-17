@@ -42,7 +42,9 @@ export class NewBookingComponent implements OnInit {
 
   selectedFlight: number | undefined;
 
-  constructor() {}
+  constructor() {
+
+  }
 
   get currentBooking(): Booking {
     const booking = this.bookingForm.value as Booking;
@@ -64,6 +66,8 @@ export class NewBookingComponent implements OnInit {
   ngOnInit(): void {
     this.flightService.getFlights().subscribe((resp) => {
       this.flightsInfo = resp;
+
+      console.log(this.flightsInfo);
     });
 
     if (this.selectedPreviousFlight !== null) {
@@ -112,6 +116,14 @@ export class NewBookingComponent implements OnInit {
 
     const { id, ...createBookingPayload } = this.currentBooking;
 
+    if(createBookingPayload.flights.length<0) {
+
+      Swal.fire('Error','No hay vuelos en la reserva','error');
+      return;
+    };
+
+
+
     //crear
     this.bookingsService
       .createBooking(createBookingPayload)
@@ -128,6 +140,7 @@ export class NewBookingComponent implements OnInit {
     //adding to tempflights to display
 
     if (this.selectedFlight !== undefined) {
+      console.log(this.selectedFlight);
       this.tempFlights.push(this.flightsInfo[this.selectedFlight - 1]);
 
       this.currentBooking.flights.push(this.selectedFlight);
@@ -135,6 +148,7 @@ export class NewBookingComponent implements OnInit {
   }
   resetFlightList() {
     this.tempFlights = [];
+    this.selectedFlight=undefined;
   }
   deleteFlight(flight: Flight) {
     this.tempFlights = this.tempFlights.filter((flit) => flit.id != flight.id);
