@@ -49,11 +49,21 @@ export class FlightsTableComponent implements OnInit {
   }
 
   getFlights() {
+    // this.flightService
+    //   .getFlights()
+    //   .subscribe((flights) => (this.flights = flights));
+
+    //Vuelos fecha lejana  
     this.flightService
-      .getFlights()
-      .subscribe((flights) => (this.flights = flights));
+    .getFlightsFarDate()
+    .subscribe((flights)=>(this.flights=flights));
+
 
     return this.flights;
+  }
+
+  getFlightsFarDate(){
+
   }
 
   emitFlight(flight: Flight) {
