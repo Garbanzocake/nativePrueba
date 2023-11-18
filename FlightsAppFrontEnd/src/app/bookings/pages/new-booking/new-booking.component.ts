@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import Swal from 'sweetalert2';
 
+
 @Component({
   templateUrl: './new-booking.component.html',
   styleUrls: ['./new-booking.component.css'],
@@ -40,11 +41,9 @@ export class NewBookingComponent implements OnInit {
   //To send to db
   public flightsNumber: number[] = [];
 
-  selectedFlight: number | undefined;
+  selectedFlight: number | undefined = 0;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   get currentBooking(): Booking {
     const booking = this.bookingForm.value as Booking;
@@ -59,7 +58,7 @@ export class NewBookingComponent implements OnInit {
       Validators.required,
       Validators.min(1),
     ]),
-    flights: new FormControl<number[]>([] ),
+    flights: new FormControl<number[]>([],Validators.required),
     user: new FormControl<number>(this.user()!.id),
   });
 
@@ -73,7 +72,7 @@ export class NewBookingComponent implements OnInit {
     if (this.selectedPreviousFlight !== null) {
       this.selectedFlight = this.selectedPreviousFlight()?.id;
     } else {
-      this.selectedFlight = undefined;
+      this.selectedFlight = 0;
     }
 
     if (!this.router.url.includes('edit')) {
@@ -97,8 +96,6 @@ export class NewBookingComponent implements OnInit {
       });
   }
 
-
-
   onSubmit(): void {
     if (this.bookingForm.invalid) return;
 
@@ -112,17 +109,14 @@ export class NewBookingComponent implements OnInit {
       return;
     }
 
-    console.log('currentBooking', this.currentBooking);
+    
 
     const { id, ...createBookingPayload } = this.currentBooking;
 
-    if(createBookingPayload.flights.length<0) {
-
-      Swal.fire('Error','No hay vuelos en la reserva','error');
+    if (createBookingPayload.flights.length < 0) {
+      Swal.fire('Error', 'No hay vuelos en la reserva', 'error');
       return;
-    };
-
-
+    }
 
     //crear
     this.bookingsService
@@ -140,7 +134,6 @@ export class NewBookingComponent implements OnInit {
     //adding to tempflights to display
 
     if (this.selectedFlight !== undefined) {
-      console.log(this.selectedFlight);
       this.tempFlights.push(this.flightsInfo[this.selectedFlight - 1]);
 
       this.currentBooking.flights.push(this.selectedFlight);
@@ -148,10 +141,19 @@ export class NewBookingComponent implements OnInit {
   }
   resetFlightList() {
     this.tempFlights = [];
-    this.selectedFlight=undefined;
+    this.selectedFlight = 0;
+
+    this.currentBooking.flights = [];
   }
   deleteFlight(flight: Flight) {
     this.tempFlights = this.tempFlights.filter((flit) => flit.id != flight.id);
+    this.selectedFlight = 0;
+
+    let flightstemp = this.currentBooking.flights.filter((fli: number) => {
+      fli = flight.id;
+    });
+
+    this.currentBooking.flights = flightstemp;
   }
 
   showSnackbar(message: string): void {
